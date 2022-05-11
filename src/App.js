@@ -75,7 +75,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   )
 }
 
-function Frame({ url, description = 'hund', c = new THREE.Color(), ...props }) {
+function Frame({ url, description = 'leer', c = new THREE.Color(), ...props }) {
   const [hovered, hover] = useState(false)
   const [rnd] = useState(() => Math.random())
   const image = useRef()
@@ -84,9 +84,9 @@ function Frame({ url, description = 'hund', c = new THREE.Color(), ...props }) {
 
   useCursor(hovered)
   useFrame((state) => {
-    image.current.material.zoom = 2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2
+    image.current.material.zoom = 0.75 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 10
     image.current.scale.x = THREE.MathUtils.lerp(image.current.scale.x, 0.85 * (hovered ? 0.85 : 1), 0.1)
-    image.current.scale.y = THREE.MathUtils.lerp(image.current.scale.y, 0.9 * (hovered ? 0.905 : 1), 0.1)
+    image.current.scale.y = THREE.MathUtils.lerp(image.current.scale.y, 0.85 * (hovered ? 0.905 : 1), 0.1)
     frame.current.material.color.lerp(c.set(hovered ? 'orange' : 'white'), 0.1)
   })
   return (
@@ -103,7 +103,7 @@ function Frame({ url, description = 'hund', c = new THREE.Color(), ...props }) {
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
+        <Image size="cover" raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
       </mesh>
       <Text
         maxWidth={0.1}
